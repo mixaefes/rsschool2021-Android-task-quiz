@@ -1,6 +1,7 @@
 package com.rsschool.quiz
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.viewpager2.widget.ViewPager2
 import com.rsschool.quiz.databinding.FragmentLastBinding
+import java.lang.StringBuilder
 import kotlin.system.exitProcess
 
 // TODO: Rename parameter arguments, choose names that match
@@ -60,7 +62,27 @@ class LastFragment : Fragment() {
             requireActivity().finish()
             exitProcess(0)
         }
+        binding.imageViewShare.setOnClickListener {
+            sendMessage(result)
+        }
         return binding.root
+    }
+
+    private fun sendMessage(result:Int) {
+       var myResult =  with(StringBuilder()){
+            appendLine("Your result: $result %")
+            for(str in answersParam!!.indices){
+                appendLine()
+                appendLine("${str+1} ${answersParam!![str].question}")
+                appendLine("Your answer: ${answersParam!![str].answer}")
+            }
+            toString()
+        }
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Quiz result")
+        intent.putExtra(Intent.EXTRA_TEXT,myResult)
+        intent.type = "text/plain"
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
