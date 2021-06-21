@@ -15,7 +15,7 @@ import kotlin.system.exitProcess
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
+private const val ARG_ANSWERS = "Answers"
 
 
 class LastFragment : Fragment() {
@@ -25,13 +25,13 @@ class LastFragment : Fragment() {
     private val binding get() = _binding!!
 
     // TODO: Rename and change types of parameters
-    private var answers: MutableList<Answer>? = null
+    private var answersParam: MutableList<Answer>? = null
   //  private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            answers = it.getParcelableArrayList<Answer>(ARG_PARAM1)
+            answersParam = it.getParcelableArrayList(ARG_ANSWERS)
      //       param2 = it.getString(ARG_PARAM2)
         }
     }
@@ -41,11 +41,13 @@ class LastFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLastBinding.inflate(inflater, container, false)
+/*
         val mySharedPref = context?.getSharedPreferences("STORAGE_ANSWERS", Context.MODE_PRIVATE)
         val defSet = mutableSetOf<String>("no values")
         val setAnswers = mySharedPref?.getStringSet("MY_ANSWERS_SET",defSet)
         Log.i("LastFragment", "this is my answers: $setAnswers")
-      binding.textViewResult.text = mySharedPref?.getStringSet("MY_ANSWERS_SET",defSet).toString()
+*/
+      binding.textViewResult.text = answersParam.toString()
     //    Log.i("LastFragment", "${AnswersData.myAnswers[0].answer}")
         val viewPager2 = activity?.findViewById<ViewPager2>(R.id.my_view_pager)
         //back button
@@ -67,10 +69,10 @@ class LastFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: MutableList<Answer>) =
+        fun newInstance(param1Answers: MutableList<Answer>) =
             LastFragment().apply {
                 arguments = bundleOf(
-                    ARG_PARAM1 to param1
+                    ARG_ANSWERS to param1Answers
                 //    putString(ARG_PARAM2, param2)
                 )
             }

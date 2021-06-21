@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Question(val text:String, val answers:Array<Pair<String,Boolean>>):Parcelable
+data class Question(val text:String, val answers:MutableList<String>):Parcelable

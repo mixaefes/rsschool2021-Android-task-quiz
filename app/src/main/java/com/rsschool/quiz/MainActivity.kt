@@ -16,6 +16,7 @@ import com.rsschool.quiz.databinding.FragmentQuizBinding
 import java.util.*
 
 class MainActivity : AppCompatActivity(){
+    val myQuestions = QuestionsData.questions
     private lateinit var binding:ActivityMainBinding
 /*    private val questions = mutableListOf<Question>(
         Question(text = "Какого газа в атмосфере больше всего",answers = mutableListOf("Азот","Водород","Кислород","Углерод","Воландеморд")),
@@ -24,13 +25,13 @@ class MainActivity : AppCompatActivity(){
         Question(text = "Больше одной столицы в:",answers = mutableListOf("ЮАР","Алжире","Тунисе","Израиле","Мексике")),
         Question(text = "Столица ЕС",answers = mutableListOf("Брюссель","Берлин","Кельн","Вена","Гаага"))
     )*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val myAdapter = MyAdapter(this)
-    binding.myViewPager.offscreenPageLimit = 5
+        val myAdapter = MyAdapter(questions = myQuestions,this)
         binding.myViewPager.adapter = myAdapter
     binding.myViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
         @RequiresApi(Build.VERSION_CODES.M)
