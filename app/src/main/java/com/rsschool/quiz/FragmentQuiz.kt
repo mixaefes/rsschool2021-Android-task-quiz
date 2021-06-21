@@ -47,8 +47,10 @@ class FragmentQuiz(
         binding.optionFour.text = shuffledAnswers[3]
         binding.optionFive.text = shuffledAnswers[4]
         //set visibility for next and prev buttons
-        binding.previousButton.visibility = if (position < 1) View.INVISIBLE else View.VISIBLE
-        binding.nextButton.visibility = View.INVISIBLE
+        //binding.previousButton.visibility = if (position < 1) View.INVISIBLE else View.VISIBLE
+        binding.previousButton.isEnabled = position>0
+        //binding.nextButton.visibility = View.INVISIBLE
+        binding.nextButton.isEnabled = false
         //set button submit in the last view
         if (position == 4) {
             binding.nextButton.text = "SUBMIT"
@@ -56,7 +58,8 @@ class FragmentQuiz(
 
         //next button
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-            binding.nextButton.visibility = View.VISIBLE
+          //  binding.nextButton.visibility = View.VISIBLE
+            binding.nextButton.isEnabled = true
 
             val radio = view?.findViewById<RadioButton>(checkedId)
             // setAnswers[position] = radio?.text.toString()
