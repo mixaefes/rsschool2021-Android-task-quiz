@@ -20,35 +20,37 @@ private const val ARG_ANSWERS = "Answers"
 
 class LastFragment : Fragment() {
     private var _binding: FragmentLastBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     // TODO: Rename and change types of parameters
     private var answersParam: MutableList<Answer>? = null
-  //  private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             answersParam = it.getParcelableArrayList(ARG_ANSWERS)
-     //       param2 = it.getString(ARG_PARAM2)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLastBinding.inflate(inflater, container, false)
-/*
-        val mySharedPref = context?.getSharedPreferences("STORAGE_ANSWERS", Context.MODE_PRIVATE)
-        val defSet = mutableSetOf<String>("no values")
-        val setAnswers = mySharedPref?.getStringSet("MY_ANSWERS_SET",defSet)
-        Log.i("LastFragment", "this is my answers: $setAnswers")
-*/
-      binding.textViewResult.text = answersParam.toString()
-    //    Log.i("LastFragment", "${AnswersData.myAnswers[0].answer}")
+        var result: Int = 0
+        val trueAnswers = listOf<String>("0","Кур","Брюссель","ЮАР","Азот",)
+        for(valu in answersParam!!){
+            if(trueAnswers.contains(valu.answer)){
+                result += 20
+            }
+        }
+       // binding.textViewResult.text = answersParam.toString()
+        binding.textViewResult.text = result.toString()
+        //    Log.i("LastFragment", "${AnswersData.myAnswers[0].answer}")
         val viewPager2 = activity?.findViewById<ViewPager2>(R.id.my_view_pager)
         //back button
         binding.imageViewBack.setOnClickListener {
@@ -73,7 +75,7 @@ class LastFragment : Fragment() {
             LastFragment().apply {
                 arguments = bundleOf(
                     ARG_ANSWERS to param1Answers
-                //    putString(ARG_PARAM2, param2)
+                    //    putString(ARG_PARAM2, param2)
                 )
             }
     }
