@@ -15,7 +15,7 @@ import com.rsschool.quiz.databinding.ActivityMainBinding
 import com.rsschool.quiz.databinding.FragmentQuizBinding
 import java.util.*
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity(),LastFragment.ActionBackListener{
     val myQuestions = QuestionsData.questions
     private lateinit var binding:ActivityMainBinding
 /*    private val questions = mutableListOf<Question>(
@@ -46,6 +46,11 @@ class MainActivity : AppCompatActivity(){
             super.onPageSelected(position)
         }
     })
+    }
+
+    override fun onActionBack() {
+        val adapter = MyAdapter(myQuestions,this)
+        binding.myViewPager.adapter = adapter
     }
 
 

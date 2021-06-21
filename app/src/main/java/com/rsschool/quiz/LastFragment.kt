@@ -18,7 +18,7 @@ import kotlin.system.exitProcess
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_ANSWERS = "Answers"
-
+private var listener:LastFragment.ActionBackListener? = null
 
 class LastFragment : Fragment() {
     private var _binding: FragmentLastBinding? = null
@@ -26,6 +26,10 @@ class LastFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as ActionBackListener
+    }
 
     // TODO: Rename and change types of parameters
     private var answersParam: MutableList<Answer>? = null
@@ -56,7 +60,7 @@ class LastFragment : Fragment() {
         val viewPager2 = activity?.findViewById<ViewPager2>(R.id.my_view_pager)
         //back button
         binding.imageViewBack.setOnClickListener {
-            viewPager2?.currentItem = 0
+         listener?.onActionBack()
         }
         binding.imageViewClose.setOnClickListener {
             requireActivity().finish()
@@ -100,5 +104,8 @@ class LastFragment : Fragment() {
                     //    putString(ARG_PARAM2, param2)
                 )
             }
+    }
+    interface ActionBackListener{
+        fun onActionBack()
     }
 }
