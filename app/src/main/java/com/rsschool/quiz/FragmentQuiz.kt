@@ -36,6 +36,8 @@ class FragmentQuiz(
         shuffledAnswers.shuffle()
         _binding = FragmentQuizBinding.inflate(inflater, container, false)
         val viewPager = activity?.findViewById<ViewPager2>(R.id.my_view_pager)
+        //my toolbar
+        val toolbar = binding.toolbar
         //set question
         binding.question.text = questions.text
         //set toolbar tittle
@@ -47,8 +49,10 @@ class FragmentQuiz(
         binding.optionFour.text = shuffledAnswers[3]
         binding.optionFive.text = shuffledAnswers[4]
         //set visibility for next and prev buttons
-        //binding.previousButton.visibility = if (position < 1) View.INVISIBLE else View.VISIBLE
         binding.previousButton.isEnabled = position>0
+        if (position<1){
+            toolbar.navigationIcon = null
+        }
         //binding.nextButton.visibility = View.INVISIBLE
         binding.nextButton.isEnabled = false
         //set button submit in the last view
@@ -71,13 +75,7 @@ class FragmentQuiz(
                     viewPager?.currentItem = position + 1
 
                 } else {
-/*
-                    Log.i("FragmentQuizzz","mySetAnswers:  ${setAnswers.toMutableSet()}")
-                    val sP = context?.getSharedPreferences("STORAGE_ANSWERS",Context.MODE_PRIVATE)
-                    val editor = sP?.edit()
-                    editor?.putStringSet("MY_ANSWERS_SET", setAnswers.toMutableSet())
-                    editor?.commit()
-*/
+
                     myAnswers[position].question = binding.question.text.toString()
                     myAnswers[position].answer = radio?.text.toString()
 
@@ -87,10 +85,16 @@ class FragmentQuiz(
             }
         }
 
-        //previous button
+        //previous buttons
+    toolbar.setNavigationOnClickListener {
+    if (position >= 1) {
+        viewPager?.currentItem = position.minus(1)
+    } else {
+        Toast.makeText(context, "its start", Toast.LENGTH_SHORT).show()
+    }
+}
         binding.previousButton.setOnClickListener {
             if (position >= 1) {
-                Log.i("FragmentQuiz", "currentItem = ${viewPager?.currentItem}")
                 viewPager?.currentItem = position.minus(1)
             } else {
                 Toast.makeText(context, "its start", Toast.LENGTH_SHORT).show()

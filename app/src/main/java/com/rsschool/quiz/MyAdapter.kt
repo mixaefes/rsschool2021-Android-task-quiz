@@ -19,12 +19,6 @@ class MyAdapter(val questions:List<Question>,activity: FragmentActivity) :
         Answer("",""),
         Answer("",""),
         Answer("",""))
- //   var listOfAnswers = mutableListOf<String>("1","2","3","4","5")
-//    val result:Int = 0
-/*
-    inner class MyViewHolder(val binding: FragmentQuizBinding) :
-        RecyclerView.ViewHolder(binding.root)
-*/
 
 
     override fun getItemCount(): Int {

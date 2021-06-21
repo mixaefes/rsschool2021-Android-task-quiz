@@ -15,23 +15,20 @@ import com.rsschool.quiz.databinding.FragmentLastBinding
 import java.lang.StringBuilder
 import kotlin.system.exitProcess
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_ANSWERS = "Answers"
 private var listener:LastFragment.ActionBackListener? = null
 
 class LastFragment : Fragment() {
     private var _binding: FragmentLastBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as ActionBackListener
     }
 
-    // TODO: Rename and change types of parameters
+
     private var answersParam: MutableList<Answer>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +51,7 @@ class LastFragment : Fragment() {
                 result += 20
             }
         }
-       // binding.textViewResult.text = answersParam.toString()
-        binding.textViewResult.text = result.toString()
-        //    Log.i("LastFragment", "${AnswersData.myAnswers[0].answer}")
+        binding.textViewResult.text = "You result: ${result.toString()}%"
         val viewPager2 = activity?.findViewById<ViewPager2>(R.id.my_view_pager)
         //back button
         binding.imageViewBack.setOnClickListener {
