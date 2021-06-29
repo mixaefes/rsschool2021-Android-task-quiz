@@ -17,7 +17,7 @@ import kotlin.system.exitProcess
 
 
 private const val ARG_ANSWERS = "Answers"
-private var listener:LastFragment.ActionBackListener? = null
+private var listener: LastFragment.ActionBackListener? = null
 
 class LastFragment : Fragment() {
     private var _binding: FragmentLastBinding? = null
@@ -36,6 +36,8 @@ class LastFragment : Fragment() {
         arguments?.let {
             answersParam = it.getParcelableArrayList(ARG_ANSWERS)
         }
+        val viewPager2 = activity?.findViewById<ViewPager2>(R.id.my_view_pager)
+        viewPager2?.isUserInputEnabled = false
     }
 
     override fun onCreateView(
@@ -45,17 +47,16 @@ class LastFragment : Fragment() {
     ): View? {
         _binding = FragmentLastBinding.inflate(inflater, container, false)
         var result: Int = 0
-        val trueAnswers = listOf<String>("0","Кур","Брюссель","ЮАР","Азот",)
-        for(valu in answersParam!!){
-            if(trueAnswers.contains(valu.answer)){
+        val trueAnswers = listOf<String>("0", "Кур", "Брюссель", "ЮАР", "Азот")
+        for (valu in answersParam!!) {
+            if (trueAnswers.contains(valu.answer)) {
                 result += 20
             }
         }
         binding.textViewResult.text = "You result: ${result.toString()}%"
-        val viewPager2 = activity?.findViewById<ViewPager2>(R.id.my_view_pager)
         //back button
         binding.imageViewBack.setOnClickListener {
-         listener?.onActionBack()
+            listener?.onActionBack()
         }
         binding.imageViewClose.setOnClickListener {
             requireActivity().finish()
@@ -67,19 +68,19 @@ class LastFragment : Fragment() {
         return binding.root
     }
 
-    private fun sendMessage(result:Int) {
-       var myResult =  with(StringBuilder()){
+    private fun sendMessage(result: Int) {
+        var myResult = with(StringBuilder()) {
             appendLine("Your result: $result %")
-            for(str in answersParam!!.indices){
+            for (str in answersParam!!.indices) {
                 appendLine()
-                appendLine("${str+1} ${answersParam!![str].question}")
+                appendLine("${str + 1} ${answersParam!![str].question}")
                 appendLine("Your answer: ${answersParam!![str].answer}")
             }
             toString()
         }
         val intent = Intent(Intent.ACTION_SEND)
         intent.putExtra(Intent.EXTRA_SUBJECT, "Quiz result")
-        intent.putExtra(Intent.EXTRA_TEXT,myResult)
+        intent.putExtra(Intent.EXTRA_TEXT, myResult)
         intent.type = "text/plain"
         startActivity(intent)
     }
@@ -100,7 +101,8 @@ class LastFragment : Fragment() {
                 )
             }
     }
-    interface ActionBackListener{
+
+    interface ActionBackListener {
         fun onActionBack()
     }
 }

@@ -55,6 +55,7 @@ class FragmentQuiz(
         }
         //binding.nextButton.visibility = View.INVISIBLE
         binding.nextButton.isEnabled = false
+        viewPager?.isUserInputEnabled = false
         //set button submit in the last view
         if (position == 4) {
             binding.nextButton.text = "SUBMIT"
@@ -64,24 +65,14 @@ class FragmentQuiz(
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
           //  binding.nextButton.visibility = View.VISIBLE
             binding.nextButton.isEnabled = true
-
+            //set viewPager swipeable
             val radio = view?.findViewById<RadioButton>(checkedId)
+            myAnswers[position].question = binding.question.text.toString()
+            myAnswers[position].answer = radio?.text.toString()
+
             // setAnswers[position] = radio?.text.toString()
             binding.nextButton.setOnClickListener {
-                if (position <= 5) {
-                    myAnswers[position].question = binding.question.text.toString()
-                    myAnswers[position].answer = radio?.text.toString()
-
                     viewPager?.currentItem = position + 1
-
-                } else {
-
-                    myAnswers[position].question = binding.question.text.toString()
-                    myAnswers[position].answer = radio?.text.toString()
-
-                    viewPager?.currentItem = position + 1
-
-                }
             }
         }
 
